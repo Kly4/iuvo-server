@@ -2,6 +2,7 @@ module.exports = function (mongoose) {
     var ObjectId = mongoose.Schema.Types.ObjectId;
     
     var courseSchema = mongoose.Schema({
+	'school': String,
 	'subject': String,
 	'course-code': String,
 	'title': String,
@@ -9,7 +10,7 @@ module.exports = function (mongoose) {
     });
 
     var eventSchema = mongoose.Schema({
-	course_id: ObjectId,
+	'_course-id': ObjectId,
 	
 	'title': String,
 	'description': String,
