@@ -1,0 +1,23 @@
+{
+  "name": "iuvo-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kly4/iuvo-server.git"
+  },
+  "author": "Dan P <plookn>",
+  "license": "LOL",
+  "bugs": {
+    "url": "https://github.com/Kly4/iuvo-server/issues"
+  },
+  "homepage": "https://github.com/Kly4/iuvo-server",
+  "dependencies": {
+    "mongoose": "^3.8.21",
+    "restify": "^2.8.4"
+  }
+}
