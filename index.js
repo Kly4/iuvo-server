@@ -7,6 +7,14 @@ mongoose.connect('mongodb://localhost/iuvo');
 var restify = require('restify');
 
 
+// Utils
+String.prototype.toObjectId = function() {
+    var ObjectId = (require('mongoose').Types.ObjectId);
+    return new ObjectId(this.toString());
+    
+};
+
+
 // Startup
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, "Is mongod running?"));
@@ -23,6 +31,7 @@ db.once('open', function (callback) {
     function dbErr(next, cb, code) {
 	return function (err, res) {
 	    if (err) {
+		console.log("Error!");
 		console.log(err);
 		res.send({
 		    error: code || E.idk
@@ -59,27 +68,51 @@ db.once('open', function (callback) {
 	});
     }
 
+    function getSchools(req, res, next) {
+	Course.find().distinct(
+	    'school',
+	    dbErr(next, function (schools) {
+		res.send(schools);
+	    }));
+    }
+
+    function getSchoolCourses(req, res, next) {
+	Course.find({
+	    school: req.params.school
+	})
+	    .select('subject course-code -_id')
+	    .exec(dbErr(next, function (courses) {
+		res.send(courses);
+	    }));	
+    }
+
     function getCourse(req, res, next) {
 	Course.findOne({
 	    school: req.params.school,
 	    subject: req.params.subject,
-	    code: req.params.code
-	}, dbErr(next, function (course) {
+	    'course-code': req.params.code
+	}, 'title instructor', dbErr(next, function (course) {
 	    res.send(course);
 	}));
     }
     
     function getEvents(req, res, next) {
-	Event
-	    .find({
-		'_course-id': req.params.course
-	    })
-	    .where('start_date').gt(new Date())
-	    .sort('start_date')
-	    .select('-_course-id')
-	    .exec(dbErr(next, function (events) {
-		res.send(events);
-	    }));
+	Course.findOne({
+	    school: req.params.school,
+	    subject: req.params.subject,
+	    'course-code': req.params.code
+	}, dbErr(next, function (course) {
+	    Event
+		.find({
+		    '_course-id': '549f354aafc0c17039f93f53'.toObjectId()
+		})
+		.where('start-date').gt(new Date())
+		.sort('start-date')
+		.select('-_course-id -_id -__v')
+		.exec(dbErr(next, function (events) {
+		    res.send(events);
+		}));
+	}, E.course404));
     }
 
     function createEvent(req, res, next) {
@@ -102,14 +135,25 @@ db.once('open', function (callback) {
 	}, E.course404));
     }
 
+    // For getting auxiliary data of the course, like its title
     server.get('/courses/:school/:subject/:code', getCourse);
-    server.get('/events/:course', getEvents);
+    
+    // A list of all courses for autocompletion
+    server.get('/courses/:school', getSchoolCourses);
+    
+    // A list of schools
+    server.get('/schools', getSchools);
+    
+    // Events pertaining to a course
+    server.get('/events/:school/:subject/:code', getEvents);
+
     
     server.get('/test', function (req, res, next) {
 	res.send({ok: 'true'});
     });
+
     
-    server.listen('80', function (){
+    server.listen('8080', function (){
 	console.log("Restify listening at %s", server.url);
     });
 });
