@@ -1,31 +1,31 @@
 [
     {"subject": "CS",
      "school": "UMass-Amherst" ,
-     "course-code": "123",
+     "code": "123",
      "title": "Into to CS",
      "instructor": "Plyukhin"
     },
     {"subject": "Bio" ,
      "school": "UMass-Amherst" ,
-     "course-code": "151" ,
+     "code": "151" ,
      "title": "Intro to bio",
      "instructor": "Some Joe"
     },
     {"subject": "CS",
      "school": "UMass-Amherst" ,
-     "course-code": "240",
+     "code": "240",
      "title": "Reasoning under uncertainty",
      "instructor": "Jensen"
     },
     {"subject": "ECE",
      "school": "UMass-Amherst" ,
-     "course-code": "110",
+     "code": "110",
      "title": "Basic Systems",
      "instructor": "Wolf"
     },
     {"subject": "CS",
      "school": "UMass-Amherst" ,
-     "course-code": "311",
+     "code": "311",
      "title": "Algorithms",
      "instructor": "Richards"
     }

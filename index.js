@@ -80,7 +80,7 @@ db.once('open', function (callback) {
 	Course.find({
 	    school: req.params.school
 	})
-	    .select('subject course-code -_id')
+	    .select('subject code -_id')
 	    .exec(dbErr(next, function (courses) {
 		res.send(courses);
 	    }));	
@@ -90,8 +90,8 @@ db.once('open', function (callback) {
 	Course.findOne({
 	    school: req.params.school,
 	    subject: req.params.subject,
-	    'course-code': req.params.code
-	}, 'title instructor', dbErr(next, function (course) {
+	    code: req.params.code
+	}, '-_id -__v', dbErr(next, function (course) {
 	    res.send(course);
 	}));
     }
@@ -100,40 +100,41 @@ db.once('open', function (callback) {
 	Course.findOne({
 	    school: req.params.school,
 	    subject: req.params.subject,
-	    'course-code': req.params.code
+	    code: req.params.code
 	}, dbErr(next, function (course) {
 	    Event
 		.find({
-		    '_course-id': '549f354aafc0c17039f93f53'.toObjectId()
+		    'course': course._id
 		})
-		.where('start-date').gt(new Date())
-		.sort('start-date')
-		.select('-_course-id -_id -__v')
+		.where('start_date').gt(new Date())
+		.sort('start_date')
+	        //.populate('course')
+		.select('-course -_id -__v')
 		.exec(dbErr(next, function (events) {
 		    res.send(events);
 		}));
 	}, E.course404));
     }
 
-    function createEvent(req, res, next) {
-	Course.findOne({
-	    _id: req.params._id
-	}, dbErr(next, function (course) {
+    // function createEvent(req, res, next) {
+    // 	Course.findOne({
+    // 	    _id: req.params._id
+    // 	}, dbErr(next, function (course) {
 
-	    Event.create({
-		course_id: course._id,
-		title: req.params.title,
-		description: req.params.description,
-		location: req.params.location,
-		comments: [],
-		'start-date': req.params['start-date'],
-		'end-date': req.params['end-date']
-	    }, dbErr(next, function () {
-		res.send(200);
-	    }, E.create));
+    // 	    Event.create({
+    // 		course: course._id,
+    // 		title: req.params.title,
+    // 		description: req.params.description,
+    // 		location: req.params.location,
+    // 		comments: [],
+    // 		'start_date': req.params['start_date'],
+    // 		'end_date': req.params['end_date']
+    // 	    }, dbErr(next, function () {
+    // 		res.send(200);
+    // 	    }, E.create));
 
-	}, E.course404));
-    }
+    // 	}, E.course404));
+    // }
 
     // For getting auxiliary data of the course, like its title
     server.get('/courses/:school/:subject/:code', getCourse);
@@ -153,7 +154,7 @@ db.once('open', function (callback) {
     });
 
     
-    server.listen('8080', function (){
+    server.listen('80', function (){
 	console.log("Restify listening at %s", server.url);
     });
 });

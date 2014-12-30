@@ -34,7 +34,7 @@ db.once('open', function (cb) {
 		var obj = edata[i];
 		
     		// Initialize with random dates and courses
-    		obj['_course-id'] =
+    		obj['course'] =
     		    courses[Math.floor(Math.random() * courses.length)]._id;
 
 		var s = new Date();
@@ -45,8 +45,8 @@ db.once('open', function (cb) {
 		// up to 4 hours long
 		e.setTime(e.getTime() + Math.floor(1 + Math.random() * 6)*1800000);
 
-    		obj['start-date'] = s;
-    		obj['end-date'] = e;
+    		obj['start_date'] = s;
+    		obj['end_date'] = e;
 	    }
 	    Event.create(edata, function (err) {
 		if (err) {

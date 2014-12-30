@@ -4,13 +4,13 @@ module.exports = function (mongoose) {
     var courseSchema = mongoose.Schema({
 	'school': String,
 	'subject': String,
-	'course-code': String,
+	'code': String,
 	'title': String,
 	'instructor': String
     });
 
     var eventSchema = mongoose.Schema({
-	'_course-id': ObjectId,
+	'course': ObjectId,
 
 	'description': {
 	    type: String,
@@ -22,7 +22,7 @@ module.exports = function (mongoose) {
 	    validate: [maxLength(60), "Location too long"]
 	},
 	// Should make this an array of IDs
-	'num-attendees': {
+	'num_attendees': {
 	    type: Number,
 	    default: 0
 	},
@@ -34,8 +34,8 @@ module.exports = function (mongoose) {
 		     }],
 
 	// Date of the event
-	'start-date': Date,
-	'end-date': Date
+	'start_date': Date,
+	'end_date': Date
     });
 
     

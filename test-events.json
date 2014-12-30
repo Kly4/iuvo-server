@@ -1,22 +1,22 @@
 [
     {"description": "FINAL PROJECTTTT" ,
-     "num-attendees": 13,
+     "num_attendees": 13,
      "location": "Bio lab"
     },
     {"description": "Hahaha" ,
-     "num-attendees": 23,
+     "num_attendees": 23,
      "location": "Library"
     },
     {"description": "STUDY GROUP ALPHA" ,
-     "num-attendees": 666,
+     "num_attendees": 666,
      "location": "woah"
     },
     {"description": "Algorithms",
-     "num-attendees": 16,
+     "num_attendees": 16,
      "location": "commons"
     },
     {"description": "Help i'm trap",
-     "num-attendees": 18,
+     "num_attendees": 18,
      "location": "dining hall"
     }
 ]
