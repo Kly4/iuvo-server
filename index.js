@@ -80,7 +80,7 @@ db.once('open', function (callback) {
 	Course.find({
 	    school: req.params.school
 	})
-	    .select('-__v -_id')
+	    .select('-__v')
 	    .exec(dbErr(next, function (courses) {
 		res.send(courses);
 	    }));	
@@ -91,7 +91,7 @@ db.once('open', function (callback) {
 	    school: req.params.school,
 	    subject: req.params.subject,
 	    code: req.params.code
-	}, '-_id -__v', dbErr(next, function (course) {
+	}, '-__v', dbErr(next, function (course) {
 	    res.send(course);
 	}));
     }
@@ -109,7 +109,7 @@ db.once('open', function (callback) {
 		.where('start_date').gt(new Date())
 		.sort('start_date')
 	        //.populate('course')
-		.select('-course -_id -__v')
+		.select('-course -__v')
 		.exec(dbErr(next, function (events) {
 		    res.send(events);
 		}));
