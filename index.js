@@ -107,8 +107,9 @@ db.once('open', function (callback) {
 		    'course': course._id
 		})
 		.where('start_date').gt(new Date())
+		.where('last_updated').gt(req.params.last_updated)
 		.sort('start_date')
-	        //.populate('course')
+	    //.populate('course')
 		.select('-course -__v')
 		.exec(dbErr(next, function (events) {
 		    res.send(events);
@@ -146,7 +147,7 @@ db.once('open', function (callback) {
     server.get('/schools', getSchools);
     
     // Events pertaining to a course
-    server.get('/events/:school/:subject/:code', getEvents);
+    server.get('/events/:school/:subject/:code/:last_updated', getEvents);
 
     
     server.get('/test', function (req, res, next) {
