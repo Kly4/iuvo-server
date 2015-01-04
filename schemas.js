@@ -6,7 +6,11 @@ module.exports = function (mongoose) {
 	'subject': String,
 	'code': String,
 	'title': String,
-	'instructor': String
+	'instructor': String,
+	'last_updated': {
+	    type: Date,
+	    default: new Date()
+	}
     });
 
     var eventSchema = mongoose.Schema({
@@ -32,10 +36,13 @@ module.exports = function (mongoose) {
 		       author: String,
 		       date: Date
 		     }],
-
-	// Date of the event
+	// Date of the event (NOTE called 'start_time' in java)
 	'start_date': Date,
-	'end_date': Date
+
+	'last_updated': {
+	    type: Date,
+	    default: new Date()
+	}
     });
 
     

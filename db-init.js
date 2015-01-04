@@ -48,6 +48,7 @@ db.once('open', function (cb) {
     		obj['start_date'] = s;
     		obj['end_date'] = e;
 	    }
+	    
 	    Event.create(edata, function (err) {
 		if (err) {
     		    console.log('wtfevent');
