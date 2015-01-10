@@ -80,7 +80,7 @@ db.once('open', function (callback) {
 	Course.find({
 	    school: req.params.school
 	})
-	    .select('-__v')
+	    .select('subject code -_id')
 	    .exec(dbErr(next, function (courses) {
 		res.send(courses);
 	    }));	
